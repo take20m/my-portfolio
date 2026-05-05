@@ -1,0 +1,55 @@
+---
+interface Props {
+  roles?: string[];
+  stack?: string[];
+  size?: "sm" | "md";
+}
+
+const { roles = [], stack = [], size = "md" } = Astro.props;
+const hasContent = roles.length > 0 || stack.length > 0;
+---
+
+{
+  hasContent && (
+    <ul class={`taglist taglist--${size}`}>
+      {roles.map((tag) => (
+        <li class="tag tag--role">{tag}</li>
+      ))}
+      {stack.map((tag) => (
+        <li class="tag tag--stack">{tag}</li>
+      ))}
+    </ul>
+  )
+}
+
+<style>
+  .taglist {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    font-family: var(--ff-mono);
+  }
+
+  .taglist--sm {
+    font-size: var(--fs-caption);
+  }
+
+  .taglist--md {
+    font-size: var(--fs-small);
+  }
+
+  .tag {
+    border: 1px solid var(--c-border);
+    padding: 0.2rem 0.55rem;
+    color: var(--c-fg-muted);
+    line-height: 1.4;
+  }
+
+  .tag--role {
+    border-color: var(--c-fg);
+    color: var(--c-fg);
+  }
+</style>

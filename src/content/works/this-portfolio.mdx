@@ -1,0 +1,38 @@
+---
+title: このポートフォリオサイト
+summary: Astro と TypeScript で組んだ自分用のポートフォリオサイト。Cloudflare Pages にホストしています。
+startDate: 2026-04-01
+roles: ["Design", "Frontend"]
+stack: ["Astro", "TypeScript", "Cloudflare Pages"]
+thumbnail: ../../assets/works/this-portfolio-cover.svg
+thumbnailAlt: このポートフォリオサイトのカバー
+repoUrl: https://github.com/TODO_GITHUB/portfolio
+order: 1
+---
+
+import { Image } from "astro:assets";
+
+## 背景
+
+エンジニアとしての成果物をまとめて見せる場所が欲しかったので、自分で作ることにしました。
+依頼書のような大袈裟さは要らない。**ミニマルでタイポグラフィが立つ** 構成で、作品そのものに焦点が当たる体裁を狙っています。
+
+## 構成
+
+- **Astro v6** の Content Collections で Works を MDX 管理
+- **モノトーン** の配色 + Geist Variable / Noto Sans JP の組み合わせ
+- **View Transitions** で一覧 ⇄ 詳細をなめらかに繋ぐ
+- **Cloudflare Pages** にデプロイ。独自ドメインを後段で接続
+
+## やったこと
+
+1. デザインシステム（CSS 変数）の整理
+2. Content Collections のスキーマ定義（Zod）
+3. 一覧 ⇄ 詳細の `transition:name` を揃えてレイアウトを連続させる
+4. 画像最適化（`astro:assets` の `<Image />`）
+
+## 今後
+
+- ブログ / Notes セクションの追加
+- OG 画像の自動生成（記事ごと）
+- A11y 監査と Lighthouse の継続チェック

@@ -1,0 +1,50 @@
+---
+import { site } from "../data/site";
+import SocialLinks from "./SocialLinks.astro";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-meta">
+      <p class="footer-name">{site.name}</p>
+      <p class="footer-role muted">{site.role}</p>
+    </div>
+    <SocialLinks social={site.social} />
+    <p class="copy">&copy; {year} {site.name}</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--c-border);
+    padding-block: var(--space-5) var(--space-4);
+    margin-top: var(--space-6);
+  }
+
+  .footer-inner {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .footer-meta p {
+    margin: 0;
+  }
+
+  .footer-name {
+    font-weight: 700;
+    letter-spacing: var(--ls-tight);
+  }
+
+  .footer-role {
+    font-size: var(--fs-small);
+  }
+
+  .copy {
+    margin: 0;
+    font-family: var(--ff-mono);
+    font-size: var(--fs-caption);
+    color: var(--c-fg-soft);
+  }
+</style>

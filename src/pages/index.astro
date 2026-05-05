@@ -1,0 +1,138 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import WorkCard from "../components/WorkCard.astro";
+import { site } from "../data/site";
+
+const all = await getCollection("works", ({ data }) => !data.draft);
+const featured = all
+  .sort((a, b) => {
+    const orderA = a.data.order ?? Number.POSITIVE_INFINITY;
+    const orderB = b.data.order ?? Number.POSITIVE_INFINITY;
+    if (orderA !== orderB) return orderA - orderB;
+    return b.data.startDate.getTime() - a.data.startDate.getTime();
+  })
+  .slice(0, 3);
+---
+
+<BaseLayout>
+  <section class="hero container fade-in">
+    <p class="eyebrow">Portfolio · {site.role}</p>
+    <h1 class="display">
+      {site.name}
+      <span class="hero-handle">/ {site.handle}</span>
+    </h1>
+    <p class="hero-lead">{site.tagline}</p>
+    <div class="hero-actions">
+      <a href="/works/" class="btn-primary">Works を見る <span aria-hidden="true">→</span></a>
+      <a href="/about/" class="btn-ghost">About</a>
+    </div>
+  </section>
+
+  <section class="section container">
+    <SectionHeading
+      eyebrow="Selected"
+      title="代表的な制作物"
+      href="/works/"
+      hrefLabel="すべて見る"
+    />
+    {
+      featured.length === 0 ? (
+        <p class="muted placeholder">作品データはまだありません。</p>
+      ) : (
+        <ul class="featured-grid">
+          {featured.map((entry) => (
+            <li>
+              <WorkCard entry={entry} />
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </section>
+
+  <section class="section container">
+    <SectionHeading eyebrow="About" title="このサイトについて" />
+    <p>
+      ミニマルなレイアウトとタイポグラフィ、モノトーンの配色で、作ってきた成果物だけが残るような構成にしています。
+      Astro による完全静的サイトで、Cloudflare Pages にデプロイされています。
+    </p>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    padding-block: var(--space-7) var(--space-6);
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .hero-handle {
+    display: block;
+    color: var(--c-fg-soft);
+    font-weight: 400;
+    font-family: var(--ff-mono);
+    font-size: 0.45em;
+    letter-spacing: 0.02em;
+    margin-top: 0.5em;
+  }
+
+  .hero-lead {
+    max-width: 42ch;
+    font-size: var(--fs-h3);
+    color: var(--c-fg-muted);
+    line-height: var(--lh-snug);
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: var(--space-2);
+    margin-top: var(--space-2);
+    flex-wrap: wrap;
+  }
+
+  .btn-primary,
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    padding: 0.75rem 1.25rem;
+    font-family: var(--ff-mono);
+    font-size: var(--fs-small);
+    border: 1px solid var(--c-fg);
+    transition: background 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+  }
+
+  .btn-primary {
+    background: var(--c-fg);
+    color: var(--c-bg);
+  }
+
+  .btn-primary:hover {
+    opacity: 1;
+    background: transparent;
+    color: var(--c-fg);
+  }
+
+  .btn-ghost:hover {
+    opacity: 1;
+    background: var(--c-fg);
+    color: var(--c-bg);
+  }
+
+  .placeholder {
+    font-family: var(--ff-mono);
+    font-size: var(--fs-small);
+  }
+
+  .featured-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-4) var(--space-3);
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
+  }
+</style>

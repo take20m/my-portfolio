@@ -1,0 +1,182 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import BaseLayout from "./BaseLayout.astro";
+import TagList from "../components/TagList.astro";
+import { formatPeriod } from "../utils/formatDate";
+
+interface Props {
+  entry: CollectionEntry<"works">;
+}
+
+const { entry } = Astro.props;
+const { data, id } = entry;
+const period = formatPeriod(data.startDate, data.endDate);
+---
+
+<BaseLayout title={data.title} description={data.summary}>
+  <article class="work-detail container">
+    <p class="back">
+      <a href="/works/">← Works 一覧</a>
+    </p>
+
+    <header class="work-header">
+      <p class="period eyebrow">{period}</p>
+      <h1 transition:name={`work-title-${id}`}>{data.title}</h1>
+      <p class="summary">{data.summary}</p>
+      <TagList roles={data.roles} stack={data.stack} />
+      {
+        (data.repoUrl || data.liveUrl) && (
+          <ul class="links">
+            {data.liveUrl && (
+              <li>
+                <a href={data.liveUrl} target="_blank" rel="noopener">
+                  Live <span aria-hidden="true">↗</span>
+                </a>
+              </li>
+            )}
+            {data.repoUrl && (
+              <li>
+                <a href={data.repoUrl} target="_blank" rel="noopener">
+                  Repository <span aria-hidden="true">↗</span>
+                </a>
+              </li>
+            )}
+          </ul>
+        )
+      }
+    </header>
+
+    <figure class="cover">
+      <Image
+        src={data.thumbnail}
+        alt={data.thumbnailAlt ?? data.title}
+        widths={[720, 1080, 1440]}
+        sizes="(min-width: 960px) 960px, 100vw"
+        loading="eager"
+        transition:name={`work-thumb-${id}`}
+      />
+    </figure>
+
+    <div class="prose">
+      <slot />
+    </div>
+
+    <p class="back back-bottom">
+      <a href="/works/">← Works 一覧へ戻る</a>
+    </p>
+  </article>
+</BaseLayout>
+
+<style>
+  .work-detail {
+    padding-block: var(--space-5) var(--space-6);
+    max-width: 56rem;
+  }
+
+  .back {
+    font-family: var(--ff-mono);
+    font-size: var(--fs-small);
+    margin-bottom: var(--space-3);
+  }
+
+  .back-bottom {
+    margin-top: var(--space-6);
+    border-top: 1px solid var(--c-border);
+    padding-top: var(--space-3);
+  }
+
+  .work-header {
+    display: grid;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+  }
+
+  .work-header h1 {
+    font-size: var(--fs-h1);
+    letter-spacing: var(--ls-display);
+  }
+
+  .summary {
+    font-size: var(--fs-h3);
+    color: var(--c-fg-muted);
+    line-height: var(--lh-snug);
+    margin: 0;
+  }
+
+  .links {
+    list-style: none;
+    margin: var(--space-2) 0 0;
+    padding: 0;
+    display: flex;
+    gap: 1.5rem;
+    font-family: var(--ff-mono);
+    font-size: var(--fs-small);
+  }
+
+  .links a {
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 1px;
+  }
+
+  .cover {
+    margin: 0 0 var(--space-5);
+    border: 1px solid var(--c-border);
+    overflow: hidden;
+    aspect-ratio: 16 / 10;
+  }
+
+  .cover :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .prose :global(h2) {
+    font-size: var(--fs-h2);
+    margin-top: var(--space-5);
+    margin-bottom: var(--space-2);
+  }
+
+  .prose :global(h3) {
+    font-size: var(--fs-h3);
+    margin-top: var(--space-4);
+    margin-bottom: var(--space-2);
+  }
+
+  .prose :global(p) {
+    margin: 0 0 var(--space-2);
+  }
+
+  .prose :global(ul),
+  .prose :global(ol) {
+    margin: 0 0 var(--space-2);
+  }
+
+  .prose :global(code) {
+    background: var(--c-surface);
+    padding: 0.1em 0.4em;
+    font-size: 0.9em;
+  }
+
+  .prose :global(pre) {
+    background: var(--c-fg);
+    color: var(--c-bg);
+    padding: var(--space-2);
+    overflow-x: auto;
+    font-size: var(--fs-small);
+  }
+
+  .prose :global(pre code) {
+    background: transparent;
+    padding: 0;
+  }
+
+  .prose :global(blockquote) {
+    border-left: 2px solid var(--c-fg);
+    padding-left: var(--space-2);
+    color: var(--c-fg-muted);
+    margin: var(--space-3) 0;
+  }
+</style>

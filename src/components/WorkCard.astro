@@ -1,0 +1,94 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import TagList from "./TagList.astro";
+import { formatPeriod } from "../utils/formatDate";
+
+interface Props {
+  entry: CollectionEntry<"works">;
+}
+
+const { entry } = Astro.props;
+const { data, id } = entry;
+const period = formatPeriod(data.startDate, data.endDate);
+---
+
+<article class="work-card">
+  <a class="work-card-link" href={`/works/${id}/`}>
+    <div class="thumb">
+      <Image
+        src={data.thumbnail}
+        alt={data.thumbnailAlt ?? data.title}
+        widths={[480, 720, 960]}
+        sizes="(min-width: 720px) 480px, 100vw"
+        loading="lazy"
+        decoding="async"
+        transition:name={`work-thumb-${id}`}
+      />
+    </div>
+    <div class="meta">
+      <p class="period mono">{period}</p>
+      <h3 class="title" transition:name={`work-title-${id}`}>{data.title}</h3>
+      <p class="summary muted">{data.summary}</p>
+      <TagList roles={data.roles} stack={data.stack} size="sm" />
+    </div>
+  </a>
+</article>
+
+<style>
+  .work-card-link {
+    display: grid;
+    gap: var(--space-2);
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .work-card-link:hover {
+    opacity: 1;
+  }
+
+  .work-card-link:hover .title {
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+  }
+
+  .thumb {
+    overflow: hidden;
+    border: 1px solid var(--c-border);
+    background: var(--c-surface);
+    aspect-ratio: 16 / 10;
+  }
+
+  .thumb :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .work-card-link:hover .thumb :global(img) {
+    transform: scale(1.03);
+  }
+
+  .meta {
+    display: grid;
+    gap: 0.6rem;
+  }
+
+  .period {
+    font-size: var(--fs-caption);
+    color: var(--c-fg-soft);
+    margin: 0;
+  }
+
+  .title {
+    font-size: var(--fs-h3);
+    line-height: var(--lh-snug);
+    margin: 0;
+  }
+
+  .summary {
+    margin: 0;
+    font-size: var(--fs-small);
+  }
+</style>

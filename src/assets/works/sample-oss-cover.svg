@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750">
+  <rect width="1200" height="750" fill="#ffffff"/>
+  <g fill="#0a0a0a">
+    <rect x="80" y="160" width="6" height="430"/>
+  </g>
+  <text x="120" y="220" font-family="ui-monospace, monospace" font-size="22" fill="#666666" letter-spacing="4">OPEN SOURCE</text>
+  <text x="120" y="370" font-family="Geist, system-ui, sans-serif" font-size="96" font-weight="700" fill="#0a0a0a" letter-spacing="-2">OSS Contribution</text>
+  <text x="120" y="450" font-family="Geist, system-ui, sans-serif" font-size="32" fill="#666666">小さな PR を積み重ねる</text>
+  <text x="120" y="600" font-family="ui-monospace, monospace" font-size="22" fill="#0a0a0a">$ git commit -m "fix: ..."</text>
+</svg>

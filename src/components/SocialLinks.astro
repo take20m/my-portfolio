@@ -1,0 +1,61 @@
+---
+import type { SiteSocial } from "../data/site";
+
+interface Props {
+  social: SiteSocial;
+  class?: string;
+}
+
+const { social, class: className } = Astro.props;
+
+type Item = { key: keyof SiteSocial; label: string; href: string };
+
+const definitions: { key: keyof SiteSocial; label: string }[] = [
+  { key: "github", label: "GitHub" },
+  { key: "x", label: "X" },
+  { key: "bluesky", label: "Bluesky" },
+  { key: "zenn", label: "Zenn" },
+  { key: "note", label: "note" },
+  { key: "email", label: "Email" },
+];
+
+const items: Item[] = definitions.flatMap(({ key, label }) => {
+  const value = social[key];
+  if (!value) return [];
+  const href = key === "email" ? `mailto:${value}` : value;
+  return [{ key, label, href }];
+});
+---
+
+{
+  items.length > 0 && (
+    <ul class={`social-links ${className ?? ""}`}>
+      {items.map((item) => (
+        <li>
+          <a href={item.href} rel="me noopener" target={item.key === "email" ? undefined : "_blank"}>
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+<style>
+  .social-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 1.5rem;
+    font-family: var(--ff-mono);
+    font-size: var(--fs-small);
+  }
+
+  .social-links a {
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 1px;
+  }
+</style>

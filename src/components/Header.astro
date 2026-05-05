@@ -1,0 +1,87 @@
+---
+import { nav, site } from "../data/site";
+
+const currentPath = Astro.url.pathname.replace(/\/+$/, "/") || "/";
+const isCurrent = (href: string) => {
+  const normalized = href.replace(/\/+$/, "/") || "/";
+  if (normalized === "/") return currentPath === "/";
+  return currentPath.startsWith(normalized);
+};
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="/" class="brand" aria-label={site.name}>
+      <span class="brand-mark">{site.handle}</span>
+    </a>
+    <nav aria-label="Primary">
+      <ul>
+        {
+          nav.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                aria-current={isCurrent(item.href) ? "page" : undefined}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    background: color-mix(in oklab, var(--c-bg) 92%, transparent);
+    backdrop-filter: saturate(140%) blur(8px);
+    -webkit-backdrop-filter: saturate(140%) blur(8px);
+    border-bottom: 1px solid var(--c-border);
+    z-index: 50;
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding-block: var(--space-2);
+  }
+
+  .brand {
+    text-decoration: none;
+    font-family: var(--ff-mono);
+    font-size: var(--fs-small);
+    letter-spacing: 0.04em;
+  }
+
+  .brand-mark::before {
+    content: "/ ";
+    color: var(--c-fg-soft);
+  }
+
+  nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: var(--space-3);
+    font-family: var(--ff-mono);
+    font-size: var(--fs-small);
+  }
+
+  nav a {
+    text-decoration: none;
+    color: var(--c-fg-muted);
+    padding-block: 0.25rem;
+  }
+
+  nav a[aria-current="page"] {
+    color: var(--c-fg);
+    border-bottom: 1px solid var(--c-fg);
+  }
+</style>
