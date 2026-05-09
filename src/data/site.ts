@@ -27,7 +27,7 @@ export const site: SiteData = {
   tagline: "興味の向くままに様々なことに挑戦するプログラマー",
   description:
     "ものづくりが好きな IT エンジニア take20m（たけぞむ）のポートフォリオ。作ってきたプロダクトと考えていることをまとめています。",
-  url: "https://example.pages.dev",
+  url: "https://take20m.dev",
   locale: "ja",
   social: {
     github: "https://github.com/take20m",
