@@ -22,7 +22,8 @@ npm run dev        # http://localhost:4321
 ## 構成
 
 - 静的サイト（`output: 'static'`）
-- Content Collections (`src/content.config.ts`) で Works を MDX 管理
+- ページ: `/`（Top + About）/ `/works/` / `/works/<slug>/` / `/blog/` / `/blog/<slug>/` / `/404`
+- Content Collections (`src/content.config.ts`) で `works` と `blog` を MDX 管理
 - View Transitions (`<ClientRouter />`) で一覧 ⇄ 詳細をなめらかに繋ぐ
 - フォントは `@fontsource-variable/geist` と `@fontsource/noto-sans-jp` を自己ホスト
 - カラーは `src/styles/global.css` の CSS 変数で集中管理
@@ -51,9 +52,10 @@ npm run dev        # http://localhost:4321
 | 1 行肩書き / タグライン | `src/data/site.ts` の `role` / `tagline` |
 | サイト URL | `src/data/site.ts` の `url` と `astro.config.mjs` の `site` |
 | GitHub などの SNS | `src/data/site.ts` の `social` |
-| About 本文・略歴 | `src/pages/about.astro` |
+| About 本文・略歴・Skills・History | `src/pages/index.astro` の About セクション |
 | Works 本体 | `src/content/works/*.mdx`（サンプル 3 件は削除して良い） |
 | Works のサムネ | `src/assets/works/`（PNG/JPG/WebP/SVG 可） |
+| Blog 本体 | `src/content/blog/*.mdx`（サンプル 2 件は削除して良い） |
 | プロフィール画像 | `src/assets/profile/` 配下 |
 | favicon | `public/favicon.svg`（差し替え） |
 | OG 画像 | `public/og-default.svg` を 1200×630 の **PNG** (`og-default.png`) に差し替え、`src/layouts/BaseLayout.astro` のデフォルト ogImage も `.png` に戻す（Twitter Card は SVG 非対応） |
@@ -64,12 +66,13 @@ npm run dev        # http://localhost:4321
 ```
 src/
 ├─ assets/works/          # Works のサムネ
-├─ components/            # Header / Footer / WorkCard / TagList ...
+├─ components/            # Header / Footer / WorkCard / BlogCard / TagList ...
 ├─ content/works/         # Works の MDX エントリ
+├─ content/blog/          # Blog の MDX エントリ
 ├─ content.config.ts      # Content Collections 定義
-├─ data/site.ts           # サイト全体のメタ情報
-├─ layouts/               # BaseLayout / WorkLayout
-├─ pages/                 # ルーティング
+├─ data/site.ts           # サイト全体のメタ情報・ナビ
+├─ layouts/               # BaseLayout / WorkLayout / BlogLayout
+├─ pages/                 # ルーティング (index / works / blog / 404)
 ├─ styles/                # global.css / fonts.css
 └─ utils/                 # formatDate など
 ```
