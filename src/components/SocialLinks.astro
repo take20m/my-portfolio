@@ -8,14 +8,16 @@ interface Props {
 
 const { social, class: className } = Astro.props;
 
-type Item = { key: keyof SiteSocial; label: string; href: string };
+type Item = {
+  key: keyof SiteSocial;
+  label: string;
+  href: string;
+};
 
 const definitions: { key: keyof SiteSocial; label: string }[] = [
-  { key: "github", label: "GitHub" },
   { key: "x", label: "X" },
   { key: "bluesky", label: "Bluesky" },
-  { key: "zenn", label: "Zenn" },
-  { key: "note", label: "note" },
+  { key: "github", label: "GitHub" },
   { key: "email", label: "Email" },
 ];
 
@@ -32,8 +34,33 @@ const items: Item[] = definitions.flatMap(({ key, label }) => {
     <ul class={`social-links ${className ?? ""}`}>
       {items.map((item) => (
         <li>
-          <a href={item.href} rel="me noopener" target={item.key === "email" ? undefined : "_blank"}>
-            {item.label}
+          <a
+            href={item.href}
+            aria-label={item.label}
+            target={item.key === "email" ? undefined : "_blank"}
+            rel={item.key === "email" ? undefined : "me noopener"}
+          >
+            {item.key === "x" && (
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z" />
+              </svg>
+            )}
+            {item.key === "bluesky" && (
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M5.2 3.4c2.6 1.95 5.4 5.9 6.4 8 .9-2.1 3.7-6.05 6.3-8 1.9-1.4 5-2.5 5 1.05 0 .7-.4 5.95-.6 6.8-.7 2.95-3.7 3.7-6.4 3.25 4.7.8 5.9 3.45 3.3 6.1-4.95 5-7.1-1.25-7.65-2.85a4 4 0 0 1-.05-.2 4 4 0 0 1-.05.2C10.9 19.35 8.75 25.6 3.8 20.6c-2.6-2.65-1.4-5.3 3.3-6.1-2.7.45-5.7-.3-6.4-3.25C.5 10.4.1 5.15.1 4.45c0-3.55 3.1-2.45 5-1.05Z" />
+              </svg>
+            )}
+            {item.key === "github" && (
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.57.1.78-.25.78-.55 0-.27-.01-1.18-.01-2.13-3.2.7-3.87-1.36-3.87-1.36-.52-1.32-1.27-1.67-1.27-1.67-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.75 2.68 1.24 3.34.95.1-.74.4-1.25.72-1.54-2.55-.29-5.23-1.27-5.23-5.66 0-1.25.45-2.27 1.18-3.07-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.17.91-.25 1.89-.38 2.86-.38.97 0 1.95.13 2.86.38 2.19-1.48 3.15-1.17 3.15-1.17.62 1.58.23 2.75.11 3.04.73.8 1.18 1.82 1.18 3.07 0 4.4-2.68 5.36-5.24 5.65.41.36.78 1.07.78 2.16 0 1.56-.01 2.82-.01 3.21 0 .31.21.66.79.55C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5Z" />
+              </svg>
+            )}
+            {item.key === "email" && (
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="2" y="4" width="20" height="16" rx="2" />
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+              </svg>
+            )}
           </a>
         </li>
       ))}
@@ -46,16 +73,26 @@ const items: Item[] = definitions.flatMap(({ key, label }) => {
     list-style: none;
     padding: 0;
     margin: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem 1.5rem;
-    font-family: var(--ff-mono);
-    font-size: var(--fs-small);
+    display: inline-flex;
+    align-items: center;
+    gap: 1.25rem;
   }
 
   .social-links a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--c-fg);
     text-decoration: none;
-    border-bottom: 1px solid currentColor;
-    padding-bottom: 1px;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .social-links a:hover {
+    opacity: 0.55;
+  }
+
+  .social-links svg {
+    display: block;
   }
 </style>

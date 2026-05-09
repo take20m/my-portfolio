@@ -6,45 +6,42 @@ const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer">
-  <div class="container footer-inner">
-    <div class="footer-meta">
-      <p class="footer-name">{site.name}</p>
-      <p class="footer-role muted">{site.role}</p>
-    </div>
+  <div class="footer-inner">
+    <span class="copy">© {year} {site.name}</span>
+    <span class="separator" aria-hidden="true">|</span>
     <SocialLinks social={site.social} />
-    <p class="copy">&copy; {year} {site.name}</p>
   </div>
 </footer>
 
 <style>
   .site-footer {
     border-top: 1px solid var(--c-border);
-    padding-block: var(--space-5) var(--space-4);
-    margin-top: var(--space-6);
+    padding-block: var(--space-3);
+    margin-top: var(--space-3);
   }
 
   .footer-inner {
-    display: grid;
+    max-width: var(--container);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     gap: var(--space-3);
-  }
-
-  .footer-meta p {
-    margin: 0;
-  }
-
-  .footer-name {
-    font-weight: 700;
-    letter-spacing: var(--ls-tight);
-  }
-
-  .footer-role {
-    font-size: var(--fs-small);
+    flex-wrap: wrap;
   }
 
   .copy {
-    margin: 0;
     font-family: var(--ff-mono);
-    font-size: var(--fs-caption);
+    font-size: var(--fs-small);
+    color: var(--c-fg-muted);
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+
+  .separator {
     color: var(--c-fg-soft);
+    font-family: var(--ff-mono);
+    font-size: var(--fs-small);
   }
 </style>
