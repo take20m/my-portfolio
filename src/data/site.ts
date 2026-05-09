@@ -10,6 +10,7 @@ export interface SiteSocial {
 export interface SiteData {
   name: string;
   handle: string;
+  pronunciation?: string;
   role: string;
   tagline: string;
   description: string;
@@ -19,21 +20,22 @@ export interface SiteData {
 }
 
 export const site: SiteData = {
-  name: "TODO_NAME",
-  handle: "TODO_HANDLE",
-  role: "Web Engineer",
-  tagline: "ものづくりが好きな Web エンジニアです。",
+  name: "take20m",
+  handle: "@take20m",
+  pronunciation: "たけぞむ",
+  role: "IT エンジニア",
+  tagline: "興味の向くままに様々なことに挑戦するプログラマー",
   description:
-    "Web エンジニアのポートフォリオ。作ってきたプロダクトと考えていることをまとめています。",
+    "ものづくりが好きな IT エンジニア take20m（たけぞむ）のポートフォリオ。作ってきたプロダクトと考えていることをまとめています。",
   url: "https://example.pages.dev",
   locale: "ja",
   social: {
-    github: "https://github.com/TODO_GITHUB",
+    github: "https://github.com/take20m/my-portfolio",
   },
 };
 
 export const nav = [
   { href: "/", label: "Top" },
   { href: "/works/", label: "Works" },
-  { href: "/about/", label: "About" },
+  { href: "/blog/", label: "Blog" },
 ] as const;
