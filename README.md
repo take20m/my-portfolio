@@ -1,78 +1,27 @@
-# portfolio
+<div align="center">
 
-ミニマル & タイポ強めの個人ポートフォリオサイト。Astro v6 + TypeScript で構築、Cloudflare Pages にデプロイする想定です。
+<img src="public/favicon.png" alt="take20m" width="160" />
 
-## セットアップ
+# ポートフォリオサイト
 
-```bash
-nvm use            # .nvmrc に従って Node 22 を使う
-npm install
-npm run dev        # http://localhost:4321
-```
+体験したこと、作ったもの、考えたこと、読んだ本のメモなど雑多に記録として残せる場所が欲しかったので、ポートフォリオサイトとして作成しました。<br />
+ミニマルでタイポグラフィックなデザインを目指しました。
 
-## コマンド
+<p>
+  <img alt="Astro" src="https://img.shields.io/badge/Astro-v6-BC52EE?logo=astro&logoColor=white" />
+  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white" />
+  <img alt="Cloudflare Pages" src="https://img.shields.io/badge/Cloudflare%20Pages-F38020?logo=cloudflarepages&logoColor=white" />
+</p>
 
-| コマンド | 内容 |
-|---|---|
-| `npm run dev` | 開発サーバー起動 |
-| `npm run check` | 型 + コンテンツスキーマの検証 |
-| `npm run build` | 本番ビルド (`dist/`) |
-| `npm run preview` | 本番ビルドをローカルで配信 |
+<img src="public/og-default.png" alt="take20m のポートフォリオ" width="800" />
+</div>
 
 ## 構成
 
 - 静的サイト（`output: 'static'`）
-- ページ: `/`（Top + About）/ `/works/` / `/works/<slug>/` / `/blog/` / `/blog/<slug>/` / `/404`
-- Content Collections (`src/content.config.ts`) で `works` と `blog` を MDX 管理
-- View Transitions (`<ClientRouter />`) で一覧 ⇄ 詳細をなめらかに繋ぐ
-- フォントは `@fontsource-variable/geist` と `@fontsource/noto-sans-jp` を自己ホスト
-- カラーは `src/styles/global.css` の CSS 変数で集中管理
-
-## Cloudflare Pages へのデプロイ
-
-1. このリポジトリを GitHub に push
-2. Cloudflare Pages のダッシュボードで「Connect to Git」→ 対象リポを選択
-3. ビルド設定:
-   - Framework preset: **Astro**
-   - Build command: `npm run build`
-   - Build output directory: `dist`
-   - Environment variables: `NODE_VERSION = 22`（または `.nvmrc` を信頼）
-   - Production branch: `main`
-4. デプロイ完了後、`*.pages.dev` で動作確認
-5. Custom domains から独自ドメインを接続
-
-## 受領待ち（TODO の差し替え場所）
-
-このプロジェクトはプレースホルダ値のまま動作します。本番化までに以下を差し替えてください。
-
-| 項目 | 場所 |
-|---|---|
-| 表示名 | `src/data/site.ts` の `name` |
-| ハンドル | `src/data/site.ts` の `handle` |
-| 1 行肩書き / タグライン | `src/data/site.ts` の `role` / `tagline` |
-| サイト URL | `src/data/site.ts` の `url` と `astro.config.mjs` の `site` |
-| GitHub などの SNS | `src/data/site.ts` の `social` |
-| About 本文・略歴・Skills・History | `src/pages/index.astro` の About セクション |
-| Works 本体 | `src/content/works/*.mdx`（サンプル 3 件は削除して良い） |
-| Works のサムネ | `src/assets/works/`（PNG/JPG/WebP/SVG 可） |
-| Blog 本体 | `src/content/blog/*.mdx`（サンプル 2 件は削除して良い） |
-| プロフィール画像 | `src/assets/profile/` 配下 |
-| favicon | `public/favicon.svg`（差し替え） |
-| OG 画像 | `public/og-default.svg` を 1200×630 の **PNG** (`og-default.png`) に差し替え、`src/layouts/BaseLayout.astro` のデフォルト ogImage も `.png` に戻す（Twitter Card は SVG 非対応） |
-| `robots.txt` のサイトマップ URL | `public/robots.txt` |
-
-## ディレクトリ概要
-
-```
-src/
-├─ assets/works/          # Works のサムネ
-├─ components/            # Header / Footer / WorkCard / BlogCard / TagList ...
-├─ content/works/         # Works の MDX エントリ
-├─ content/blog/          # Blog の MDX エントリ
-├─ content.config.ts      # Content Collections 定義
-├─ data/site.ts           # サイト全体のメタ情報・ナビ
-├─ layouts/               # BaseLayout / WorkLayout / BlogLayout
-├─ pages/                 # ルーティング (index / works / blog / 404)
-├─ styles/                # global.css / fonts.css
-└─ utils/                 # formatDate など
-```
+- ページ: `/`（Top + About）/ `/works/` / `/works/<slug>/` / `/blog/` /
+  `/blog/<slug>/` / `/404`
+- Content Collections (`src/content.config.ts`) で `works` と `blog` を
+  MDXで管理
+- フォントは `@fontsource-variable/geist` と `@fontsource/noto-sans-jp` を使用
+- カラーは `src/styles/global.css` に定義

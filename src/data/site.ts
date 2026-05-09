@@ -30,7 +30,7 @@ export const site: SiteData = {
   url: "https://example.pages.dev",
   locale: "ja",
   social: {
-    github: "https://github.com/take20m/my-portfolio",
+    github: "https://github.com/take20m",
   },
 };
 
