@@ -26,7 +26,7 @@ export const site: SiteData = {
   role: "IT エンジニア",
   tagline: "興味の向くままに様々なことに挑戦するプログラマー",
   description:
-    "ものづくりが好きな IT エンジニア take20m（たけぞむ）のポートフォリオ。作ってきたプロダクトと考えていることをまとめています。",
+    "take20m（たけぞむ）のポートフォリオサイト。体験したこと、作ったもの、考えたこと、読んだ本のメモなど雑多にまとめています。",
   url: "https://take20m.dev",
   locale: "ja",
   social: {
