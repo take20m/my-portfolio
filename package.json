@@ -8,7 +8,10 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "astro": "astro"
+    "astro": "astro",
+    "assets:favicon": "node scripts/make-favicon.mjs",
+    "assets:og": "node scripts/make-og.mjs",
+    "assets": "npm run assets:favicon && npm run assets:og"
   },
   "dependencies": {
     "@astrojs/mdx": "^5.0.4",
