@@ -1,0 +1,152 @@
+---
+import type { CollectionEntry } from "astro:content";
+import BaseLayout from "./BaseLayout.astro";
+import { formatFullDate, isoDate } from "../utils/formatDate";
+
+interface Props {
+  entry: CollectionEntry<"blog">;
+}
+
+const { entry } = Astro.props;
+const { data, id } = entry;
+---
+
+<BaseLayout title={data.title} description={data.summary}>
+  <article class="blog-detail container">
+    <p class="back">
+      <a href="/blog/">← Blog 一覧</a>
+    </p>
+
+    <header class="blog-header">
+      <time class="date mono" datetime={isoDate(data.pubDate)}>
+        {formatFullDate(data.pubDate)}
+        {
+          data.updatedDate && (
+            <span class="muted"> · updated {formatFullDate(data.updatedDate)}</span>
+          )
+        }
+      </time>
+      <h1 transition:name={`blog-title-${id}`}>{data.title}</h1>
+      <p class="summary muted">{data.summary}</p>
+      {
+        data.tags.length > 0 && (
+          <ul class="tags">
+            {data.tags.map((tag) => (
+              <li>#{tag}</li>
+            ))}
+          </ul>
+        )
+      }
+    </header>
+
+    <div class="prose">
+      <slot />
+    </div>
+
+    <p class="back back-bottom">
+      <a href="/blog/">← Blog 一覧へ戻る</a>
+    </p>
+  </article>
+</BaseLayout>
+
+<style>
+  .blog-detail {
+    padding-block: var(--space-5) var(--space-6);
+  }
+
+  .back {
+    font-family: var(--ff-mono);
+    font-size: var(--fs-small);
+    margin-bottom: var(--space-3);
+  }
+
+  .back-bottom {
+    margin-top: var(--space-6);
+    border-top: 1px solid var(--c-border);
+    padding-top: var(--space-3);
+  }
+
+  .blog-header {
+    display: grid;
+    gap: var(--space-2);
+    margin-bottom: var(--space-5);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--c-border);
+  }
+
+  .blog-header h1 {
+    font-size: var(--fs-h1);
+    letter-spacing: var(--ls-display);
+  }
+
+  .date {
+    font-size: var(--fs-small);
+    color: var(--c-fg-muted);
+    margin: 0;
+  }
+
+  .summary {
+    font-size: var(--fs-h3);
+    line-height: var(--lh-snug);
+    margin: 0;
+  }
+
+  .tags {
+    list-style: none;
+    margin: var(--space-1) 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.6rem;
+    font-family: var(--ff-mono);
+    font-size: var(--fs-small);
+    color: var(--c-fg-soft);
+  }
+
+  .prose :global(h2) {
+    font-size: var(--fs-h2);
+    margin-top: var(--space-5);
+    margin-bottom: var(--space-2);
+  }
+
+  .prose :global(h3) {
+    font-size: var(--fs-h3);
+    margin-top: var(--space-4);
+    margin-bottom: var(--space-2);
+  }
+
+  .prose :global(p) {
+    margin: 0 0 var(--space-2);
+  }
+
+  .prose :global(ul),
+  .prose :global(ol) {
+    margin: 0 0 var(--space-2);
+  }
+
+  .prose :global(code) {
+    background: var(--c-surface);
+    padding: 0.1em 0.4em;
+    font-size: 0.9em;
+  }
+
+  .prose :global(pre) {
+    background: var(--c-fg);
+    color: var(--c-bg);
+    padding: var(--space-2);
+    overflow-x: auto;
+    font-size: var(--fs-small);
+  }
+
+  .prose :global(pre code) {
+    background: transparent;
+    padding: 0;
+  }
+
+  .prose :global(blockquote) {
+    border-left: 2px solid var(--c-fg);
+    padding-left: var(--space-2);
+    color: var(--c-fg-muted);
+    margin: var(--space-3) 0;
+  }
+</style>

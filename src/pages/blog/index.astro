@@ -1,0 +1,53 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import BlogCard from "../../components/BlogCard.astro";
+
+const all = await getCollection("blog", ({ data }) => !data.draft);
+const posts = all.sort(
+  (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
+);
+---
+
+<BaseLayout title="Blog" description="記録・メモ・読み物">
+  <section class="container blog-page">
+    <header class="page-header">
+      <h1>Blog</h1>
+      <p class="muted">
+        体験したこと、作ったもの、考えたこと、読んだ本などの雑多なまとめ
+      </p>
+    </header>
+
+    {
+      posts.length === 0 ? (
+        <p class="muted">記事はまだありません。</p>
+      ) : (
+        <ul class="post-list">
+          {posts.map((entry) => (
+            <li>
+              <BlogCard entry={entry} />
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </section>
+</BaseLayout>
+
+<style>
+  .blog-page {
+    padding-block: var(--space-5) var(--space-6);
+  }
+
+  .page-header {
+    display: grid;
+    gap: 0.75rem;
+    margin-bottom: var(--space-4);
+  }
+
+  .post-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+</style>

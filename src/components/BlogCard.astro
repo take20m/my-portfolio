@@ -1,0 +1,79 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { formatFullDate, isoDate } from "../utils/formatDate";
+
+interface Props {
+  entry: CollectionEntry<"blog">;
+}
+
+const { entry } = Astro.props;
+const { data, id } = entry;
+---
+
+<article class="blog-card">
+  <a class="blog-card-link" href={`/blog/${id}/`}>
+    <time class="date mono" datetime={isoDate(data.pubDate)}>
+      {formatFullDate(data.pubDate)}
+    </time>
+    <h3 class="title" transition:name={`blog-title-${id}`}>{data.title}</h3>
+    <p class="summary muted">{data.summary}</p>
+    {
+      data.tags.length > 0 && (
+        <ul class="tags">
+          {data.tags.map((tag) => (
+            <li>#{tag}</li>
+          ))}
+        </ul>
+      )
+    }
+  </a>
+</article>
+
+<style>
+  .blog-card-link {
+    display: grid;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: inherit;
+    padding-block: var(--space-3);
+    border-bottom: 1px solid var(--c-border);
+  }
+
+  .blog-card-link:hover {
+    opacity: 1;
+  }
+
+  .blog-card-link:hover .title {
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+  }
+
+  .date {
+    font-size: var(--fs-caption);
+    color: var(--c-fg-soft);
+    margin: 0;
+  }
+
+  .title {
+    font-size: var(--fs-h3);
+    line-height: var(--lh-snug);
+    margin: 0;
+  }
+
+  .summary {
+    font-size: var(--fs-small);
+    margin: 0;
+  }
+
+  .tags {
+    list-style: none;
+    margin: 0.25rem 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.6rem;
+    font-family: var(--ff-mono);
+    font-size: var(--fs-caption);
+    color: var(--c-fg-soft);
+  }
+</style>
