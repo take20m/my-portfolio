@@ -1,0 +1,44 @@
+---
+title: おくすりリマインダー
+summary: お薬の飲み忘れを減らすための、服薬リマインダーと履歴管理の PWA
+startDate: 2026-04-07
+roles: ["Frontend", "Backend"]
+stack: ["Preact", "TypeScript", "Cloudflare Workers", "Hono", "Firebase Auth"]
+thumbnail: ../../assets/works/my-medicine-reminder-cover.png
+thumbnailAlt: my-medicine-reminder のカバー画像
+repoUrl: https://github.com/take20m/my-medicine-reminder
+liveUrl: https://my-medicine-reminder.pages.dev/
+order: 1
+---
+
+import { Image } from "astro:assets";
+
+### 背景
+
+「今日薬飲んだっけ？」を毎回思い出すのが面倒で、月末に薬の数を数えると余ることがあったので、服薬リマインドと履歴管理ができる PWA を作りました。
+Google ログインに対応しており、使用者ごとにおくすりや服用タイミングをカスタマイズ可能です。
+
+### 構成
+
+- フロントエンド: **Preact + Vite + TypeScript**、ホスティングは **Cloudflare Pages**
+- PWA / 通知表示: **Service Worker + Workbox**
+- API: **Cloudflare Workers + Hono**
+- データストア: **Cloudflare KV**
+- 認証: **Firebase Authentication**（Google）
+- プッシュ通知: **Web Push (VAPID)** を自前実装
+- スケジューラー: **Cloudflare Cron Triggers**（5 分間隔）
+- 日付の境界は **JST (Asia/Tokyo)** で固定
+
+### 主な機能
+
+- 複数のお薬を登録、有効/無効で一時停止も可
+- 朝・昼・夕・就寝前の 4 タイミング、時刻はユーザーごとに変更可
+- 定時に Web Push でリマインド、飲み忘れたら設定間隔で再通知
+- 飲んだと記録すれば、その時刻の残り通知は自動で閉じる
+- 月ごとのカレンダーで taken / skipped / 未記録を色分け表示
+- iOS / Android のホーム画面に追加できる PWA、オフラインでも履歴は閲覧可能
+
+### 今後やりたいこと
+
+- 通知の文面カスタマイズ
+- 特定の曜日だけのおくすりを登録できる機能
