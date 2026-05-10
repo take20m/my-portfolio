@@ -1,0 +1,37 @@
+---
+title: ReadingAsset
+summary: 読んだ本の感想を投稿・管理して読書習慣を身につけるための Web アプリ
+startDate: 2021-04-28
+roles: ["Backend", "Infra"]
+stack: ["Rails", "MySQL", "Docker", "AWS"]
+thumbnail: ../../assets/works/reading-asset-cover.png
+thumbnailAlt: ReadingAsset のカバー画像
+repoUrl: https://github.com/take20m/ReadingAsset
+order: 4
+---
+
+import { Image } from "astro:assets";
+
+### 背景
+
+読んだ本の感想を投稿することで読書習慣を身につけたくて、自分の使うアプリとして作りました。
+個人開発で **Rails + Docker + AWS** を一通り触る練習を兼ねており、現在は維持費の都合で AWS のインスタンスは停止中です。
+
+### 構成
+
+- **Ruby on Rails** + **Slim** / **SCSS** で実装
+- DB は **MySQL**、本の検索は **Google Books API**
+- **Docker Compose** でローカル環境を構築（app / mysql / nginx）
+- **AWS**（EC2 / RDS / ALB / Route53 / ACM / S3）にデプロイ
+- **Travis CI** で push / PR 時に RSpec を自動実行
+
+### 主な機能
+
+- ユーザー認証（サインアップ / ログイン / プロフィール編集）
+- 本の検索（Google Books API）
+- 感想の投稿 / 編集 / 削除
+
+### 振り返り
+
+- 個人プロダクトを **Rails と AWS** で一通り運用した初めての経験
+- 維持費とアクセス頻度のバランスが取れず、運用コストの肌感を得た
