@@ -22,9 +22,9 @@ export interface SiteData {
 export const site: SiteData = {
   name: "take20m",
   handle: "@take20m",
-  pronunciation: "たけぞむ",
+  pronunciation: "たけぞむ・たけぞえむ",
   role: "IT エンジニア",
-  tagline: "興味の向くままに様々なことに挑戦するプログラマー",
+  tagline: "興味の向くままに様々なことに挑戦するワクワクプログラマー",
   description:
     "take20mのポートフォリオサイト。体験したこと、作ったもの、考えたこと、読んだ本のメモなど雑多にまとめています。",
   url: "https://take20m.dev",
