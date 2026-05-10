@@ -35,7 +35,7 @@ export const site: SiteData = {
 };
 
 export const nav = [
-  { href: "/", label: "Top" },
+  { href: "/", label: "About" },
   { href: "/works/", label: "Works" },
   { href: "/blog/", label: "Blog" },
 ] as const;
