@@ -1,0 +1,37 @@
+---
+title: torabo-tsuki-lp
+summary: トラックボール付き自作キーボード「torabo-tsuki LP」の ZMK ファームウェア（独自キーマップ）
+startDate: 2026-02-21
+roles: ["Firmware", "Keymap"]
+stack: ["ZMK", "Devicetree", "C"]
+thumbnail: ../../assets/works/zmk-keyboard-torabo-tsuki-lp-cover.png
+thumbnailAlt: torabo-tsuki LP のカバー画像
+repoUrl: https://github.com/take20m/zmk-keyboard-torabo-tsuki-lp
+order: 3
+---
+
+import { Image } from "astro:assets";
+
+### 背景
+
+sekigon-gonnoc さんが設計・頒布している自作キーボード [torabo-tsuki LP](https://github.com/sekigon-gonnoc/torabo-tsuki-lp) を組み立てて、キーマップとトラックボールのスクロールレイヤーの追加等のチューニングをしました。
+
+### 構成
+
+- **ZMK**（Zephyr RTOS ベース）のファームウェア
+- キーマップは **Devicetree (.keymap)** で記述、`keymap-editor` でも編集可
+- 42 キー / 4 行のコンパクトレイアウト
+- レイヤー: base / FUNCTION / 低速モード / 矢印 / マウス / スクロール / Figma 操作 / F1-F12 / ズーム の 8 層
+- キーマップ図は **keymap-drawer** で SVG 自動生成
+
+### やったこと
+
+- ZMK v0.3 へアップデート
+- deepsleep 時の消費電力を改善（`NRF_GPIO_DRIVE_H0H1`）
+- 61 キー → 42 キー（5 行 → 4 行）にレイアウト変更し `config/info.json` も差し替え
+- トラックボール低速モード・ズームモード（Cmd+スクロール）など用途別レイヤーを追加
+
+### 今後やりたいこと
+
+- 使い込みながらキーマップの微調整
+- コンボやカスタムビヘイビアの追加
