@@ -29,14 +29,17 @@ const blog = defineCollection({
     base: "./src/content/blog",
     pattern: "**/[^_]*.{md,mdx}",
   }),
-  schema: z.object({
-    title: z.string(),
-    summary: z.string(),
-    pubDate: z.coerce.date(),
-    updatedDate: z.coerce.date().optional(),
-    tags: z.array(z.string()).default([]),
-    draft: z.boolean().default(false),
-  }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      summary: z.string(),
+      pubDate: z.coerce.date(),
+      updatedDate: z.coerce.date().optional(),
+      tags: z.array(z.string()).default([]),
+      thumbnail: image().optional(),
+      thumbnailAlt: z.string().optional(),
+      draft: z.boolean().default(false),
+    }),
 });
 
 export const collections = { works, blog };

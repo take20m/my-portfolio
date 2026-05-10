@@ -1,4 +1,5 @@
 ---
+import { getImage } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import BaseLayout from "./BaseLayout.astro";
 import { formatFullDate, isoDate } from "../utils/formatDate";
@@ -9,9 +10,20 @@ interface Props {
 
 const { entry } = Astro.props;
 const { data, id } = entry;
+
+const ogImage = data.thumbnail
+  ? (
+      await getImage({
+        src: data.thumbnail,
+        width: 1200,
+        height: 630,
+        format: "png",
+      })
+    ).src
+  : undefined;
 ---
 
-<BaseLayout title={data.title} description={data.summary}>
+<BaseLayout title={data.title} description={data.summary} ogImage={ogImage}>
   <article class="blog-detail container">
     <p class="back">
       <a href="/blog/">← Blog 一覧</a>

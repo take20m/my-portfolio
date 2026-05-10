@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import { Image, getImage } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import BaseLayout from "./BaseLayout.astro";
 import TagList from "../components/TagList.astro";
@@ -12,9 +12,16 @@ interface Props {
 const { entry } = Astro.props;
 const { data, id } = entry;
 const period = formatPeriod(data.startDate, data.endDate);
+
+const ogImage = await getImage({
+  src: data.thumbnail,
+  width: 1200,
+  height: 630,
+  format: "png",
+});
 ---
 
-<BaseLayout title={data.title} description={data.summary}>
+<BaseLayout title={data.title} description={data.summary} ogImage={ogImage.src}>
   <article class="work-detail container">
     <p class="back">
       <a href="/works/">← Works 一覧</a>
