@@ -1,0 +1,38 @@
+---
+title: ai-lunch-bot
+summary: AI Agent をクライアントに、自然言語でお弁当の注文・確認ができるローカル MCP サーバー
+startDate: 2026-02-08
+roles: ["Backend", "Tooling"]
+stack: ["Python", "MCP", "Gemini API"]
+thumbnail: ../../assets/works/ai-lunch-bot-cover.png
+thumbnailAlt: ai-lunch-bot のカバー画像
+repoUrl: https://github.com/take20m/ai-lunch-bot
+order: 2
+---
+
+import { Image } from "astro:assets";
+
+### 背景
+
+社内で利用しているお弁当注文サービス「すみよし」のメニュー確認・注文を、Claude Code や GitHub Copilot などの AI アシスタントから自然言語で操作したくて作りました。
+PDF のメニュー表をいちいち開く・専用サイトにログインする手間を、エージェント越しの会話に置き換えています。
+
+### 構成
+
+- **Python** 製のローカル MCP（Model Context Protocol）サーバー
+- メニュー PDF を **Gemini** で OCR → JSON 化（画像変換不要）
+- すみよし注文システムへの **HTTP リクエスト** で注文 / 取り消し
+- **stdio / SSE** 両トランスポートに対応
+- launchd で毎朝の注文状況を **Slack** に通知
+- 秘密情報は **keyring** で各 OS のセキュアストレージに保存
+
+### やったこと
+
+- MCP サーバーとしてのツール定義（メニュー検索 / 注文 / 取り消し / 状況確認）
+- Gemini に PDF を直接渡して構造化 JSON にするプロンプト設計
+- 注文システムの内部 API をリバースエンジニアリングして HTTP クライアントを実装
+
+### 今後やりたいこと
+
+- メニューのキャッシュ戦略の改善
+- 通知のテンプレートをカスタマイズ可能に
