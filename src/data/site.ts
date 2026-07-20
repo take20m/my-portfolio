@@ -31,6 +31,7 @@ export const site: SiteData = {
   locale: "ja",
   social: {
     github: "https://github.com/take20m",
+    email: "contact@take20m.dev",
   },
 };
 
