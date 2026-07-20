@@ -14,11 +14,11 @@
     "assets": "npm run assets:favicon && npm run assets:og"
   },
   "dependencies": {
-    "@astrojs/mdx": "^5.0.4",
-    "@astrojs/sitemap": "^3.7.2",
+    "@astrojs/mdx": "^7.0.3",
+    "@astrojs/sitemap": "^3.7.3",
     "@fontsource-variable/geist": "^5.2.8",
     "@fontsource/noto-sans-jp": "^5.2.9",
-    "astro": "^6.2.2"
+    "astro": "^7.1.2"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
