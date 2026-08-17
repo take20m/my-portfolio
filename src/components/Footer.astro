@@ -9,6 +9,8 @@ const year = new Date().getFullYear();
   <div class="footer-inner">
     <span class="copy">© {year} {site.name}</span>
     <span class="separator" aria-hidden="true">|</span>
+    <a class="privacy-link" href="/privacy/">プライバシーポリシー</a>
+    <span class="separator" aria-hidden="true">|</span>
     <SocialLinks social={site.social} />
   </div>
 </footer>
@@ -43,5 +45,11 @@ const year = new Date().getFullYear();
     color: var(--c-fg-soft);
     font-family: var(--ff-mono);
     font-size: var(--fs-small);
+  }
+
+  .privacy-link {
+    font-size: var(--fs-small);
+    color: var(--c-fg-muted);
+    white-space: nowrap;
   }
 </style>
