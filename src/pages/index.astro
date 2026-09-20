@@ -1,8 +1,28 @@
 ---
 import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import BlogCard from "../components/BlogCard.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import WorkCard from "../components/WorkCard.astro";
 import { site } from "../data/site";
 import avatar from "../assets/profile/avatar.png";
+
+// トップに最新の Works と Blog を出す(リンクだけだと中身が伝わらないため)
+const allWorks = await getCollection("works", ({ data }) => !data.draft);
+const latestWorks = allWorks
+  .sort((a, b) => {
+    const orderA = a.data.order ?? Number.POSITIVE_INFINITY;
+    const orderB = b.data.order ?? Number.POSITIVE_INFINITY;
+    if (orderA !== orderB) return orderA - orderB;
+    return b.data.startDate.getTime() - a.data.startDate.getTime();
+  })
+  .slice(0, 3);
+
+const allPosts = await getCollection("blog", ({ data }) => !data.draft);
+const latestPosts = allPosts
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+  .slice(0, 3);
 
 const hobbies: string[] = [
   "旅行",
@@ -121,9 +141,52 @@ const history: HistoryItem[] = [
       </ol>
     </div>
   </section>
+
+  {
+    latestWorks.length > 0 && (
+      <section class="section container fade-in" id="works">
+        <SectionHeading title="Works" href="/works/" hrefLabel="すべての作品" />
+        <ul class="home-works">
+          {latestWorks.map((entry) => (
+            <li>
+              <WorkCard entry={entry} />
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  {
+    latestPosts.length > 0 && (
+      <section class="section container fade-in" id="blog">
+        <SectionHeading title="Blog" href="/blog/" hrefLabel="すべての記事" />
+        <ul class="home-posts">
+          {latestPosts.map((entry) => (
+            <li>
+              <BlogCard entry={entry} />
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
 </BaseLayout>
 
 <style>
+  .home-works,
+  .home-posts {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .home-works {
+    display: grid;
+    gap: var(--space-5) var(--space-3);
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
+  }
+
   .about-grid {
     display: grid;
     gap: var(--space-4);
