@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://example.pages.dev/sitemap-index.xml
+Sitemap: https://take20m.dev/sitemap-index.xml
