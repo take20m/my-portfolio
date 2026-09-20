@@ -1,6 +1,6 @@
 ---
 title: ポートフォリオサイト
-summary: Astro(TypeScript)で組んだシンプルな構成の静的ポートフォリオサイト
+summary: 作ったものや日々の記録をまとめる、Astro製のポートフォリオサイト
 startDate: 2026-04-01
 roles: ["Design", "Frontend"]
 stack: ["Astro", "TypeScript", "Cloudflare Pages"]
@@ -12,16 +12,17 @@ order: 3
 
 import { Image } from "astro:assets";
 
-### 背景
+### このサイトについて
 
-体験したこと、作ったもの、考えたこと、読んだ本のメモなど雑多に記録として残せる場所が欲しかったので、ポートフォリオサイトとして作成しました。
-ミニマルでタイポグラフィックなデザインを目指しました。
+作ったものだけでなく、体験したことや考えたこと、読んだ本のメモもまとめて残せる場所が欲しくて、このサイトを作りました。
 
-### 構成
+主役になるのは記事なので、装飾は抑え、文字を読みやすく見せるデザインを意識しています。
 
-- **Astro v6** の Content CollectionsでコンテンツをMDXで管理
+### 技術構成
+
+- **Astro v6** の Content Collections でコンテンツを MDX として管理
 - **Cloudflare Pages** にホスティング
 
-### 今後やりたいこと
+### 今後
 
-- OG 画像の自動生成（記事ごと）
+- 記事ごとの OG 画像生成

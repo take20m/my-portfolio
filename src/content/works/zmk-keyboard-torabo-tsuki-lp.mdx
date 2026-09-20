@@ -1,6 +1,6 @@
 ---
 title: torabo-tsuki-lp
-summary: トラックボール付き自作キーボード「torabo-tsuki LP」の ZMK ファームウェア（独自キーマップ）
+summary: トラックボール付き自作キーボード「torabo-tsuki LP」用に調整した ZMK ファームウェア
 startDate: 2026-02-21
 roles: ["Firmware", "Keymap"]
 stack: ["ZMK", "Devicetree", "C"]
@@ -12,26 +12,23 @@ order: 5
 
 import { Image } from "astro:assets";
 
-### 背景
+### このファームウェアについて
 
-sekigon-gonnoc さんが設計・頒布している自作キーボード [torabo-tsuki LP](https://github.com/sekigon-gonnoc/torabo-tsuki-lp) を組み立てて、キーマップとトラックボールのスクロールレイヤーの追加等のチューニングをしました。
+sekigon-gonnoc さんが設計・頒布している自作キーボード [torabo-tsuki LP](https://github.com/sekigon-gonnoc/torabo-tsuki-lp) を組み立て、自分の使い方に合わせてファームウェアを調整しました。キーマップの変更に加え、トラックボールをスクロールやズームに使うためのレイヤーも追加しています。
 
-### 構成
+### 主な変更
 
-- **ZMK**（Zephyr RTOS ベース）のファームウェア
-- キーマップは **Devicetree (.keymap)** で記述、`keymap-editor` でも編集可
-- 42 キー / 4 行のコンパクトレイアウト
-- レイヤー: base / FUNCTION / 低速モード / 矢印 / マウス / スクロール / Figma 操作 / F1-F12 / ズーム の 8 層
-- キーマップ図は **keymap-drawer** で SVG 自動生成
+- ZMK を v0.3 へ更新
+- 61 キー・5 行から、42 キー・4 行のレイアウトへ変更
+- トラックボールの低速操作、スクロール、ズーム（Cmd + スクロール）用のレイヤーを追加
+- Figma、矢印、マウス、F1〜F12 など、用途別のレイヤーを追加
+- deepsleep 時の消費電力を `NRF_GPIO_DRIVE_H0H1` で改善
 
-### やったこと
+ファームウェアは、Zephyr RTOS をベースにした **ZMK** を使用しています。キーマップは **Devicetree（.keymap）** で管理し、`keymap-editor` からも編集できます。レイアウトの変更に合わせて `config/info.json` も差し替えました。
 
-- ZMK v0.3 へアップデート
-- deepsleep 時の消費電力を改善（`NRF_GPIO_DRIVE_H0H1`）
-- 61 キー → 42 キー（5 行 → 4 行）にレイアウト変更し `config/info.json` も差し替え
-- トラックボール低速モード・ズームモード（Cmd+スクロール）など用途別レイヤーを追加
+キーマップ図は **keymap-drawer** から SVG を自動生成しています。設定を変えたときに図も更新できるため、複数のレイヤーを見比べやすくなりました。
 
-### 今後やりたいこと
+### 今後
 
 - 使い込みながらキーマップの微調整
 - コンボやカスタムビヘイビアの追加
