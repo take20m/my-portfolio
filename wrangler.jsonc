@@ -1,4 +1,5 @@
 {
+  "$schema": "./node_modules/wrangler/config-schema.json",
   // 静的アセットのみを配信する Worker（Worker スクリプトは持たない）
   "name": "portfolio",
   "compatibility_date": "2026-09-22",
