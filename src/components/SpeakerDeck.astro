@@ -1,0 +1,56 @@
+---
+interface Props {
+  /** Speaker Deck の埋め込み ID（player URL の末尾） */
+  id: string;
+  /** スライドのタイトル。iframe の title とキャプションに使う */
+  title: string;
+  /** Speaker Deck のページ URL。渡すとキャプションがリンクになる */
+  href?: string;
+  /** 表示比率。既定は Speaker Deck の標準 16:9 */
+  ratio?: string;
+}
+
+const { id, title, href, ratio = "710 / 399" } = Astro.props;
+---
+
+<figure class="speakerdeck">
+  <iframe
+    src={`https://speakerdeck.com/player/${id}`}
+    title={title}
+    style={`aspect-ratio: ${ratio};`}
+    loading="lazy"
+    allowfullscreen
+    allowtransparency="true"
+    frameborder="0"></iframe>
+  {
+    href && (
+      <figcaption>
+        <a href={href} target="_blank" rel="noopener noreferrer">
+          {title}
+        </a>
+      </figcaption>
+    )
+  }
+</figure>
+
+<style>
+  .speakerdeck {
+    margin: var(--space-3) 0;
+  }
+
+  .speakerdeck iframe {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+  }
+
+  .speakerdeck figcaption {
+    margin-top: var(--space-1);
+    font-size: var(--fs-small);
+    color: var(--c-fg-muted);
+  }
+</style>

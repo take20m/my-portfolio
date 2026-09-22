@@ -6,6 +6,8 @@ tags: ["LLM", "Cloudflare", "個人開発"]
 draft: false
 ---
 
+import SpeakerDeck from "../../components/SpeakerDeck.astro";
+
 [サンドーム福井 コンサート・ライブ情報](https://sundome.take20m.dev/)というサイトを運営しています。
 公演の予定と、チケットの先行・抽選の受付期間を毎晩自動で集めて掲載しています。
 
@@ -13,6 +15,14 @@ draft: false
 GitHub Actions の cron から毎日 `claude -p` を叩き、日本語で書いた指示書を渡して WebSearch と WebFetch で調べさせています。
 
 作ってみて分かったのは、明らかな間違いよりも、日によって出力が少しずつ変わることのほうが扱いにくいということでした。この記事では、実際に起きた問題と、その対処をまとめます。
+
+このサイトを作った経緯と全体像は、LT で話した資料にまとめています。先に目を通すと、以降の話が追いやすいと思います。
+
+<SpeakerDeck
+  id="942aa6c6759c458bba898ad651c57cbd"
+  title="推しの来鯖を見逃さない！ サンドーム福井ライブスケジュールアプリを作った話🎤"
+  href="https://speakerdeck.com/misonotakezo/tui-sinolai-qing-wojian-tao-sanai-sandomufu-jing-raibusukeziyuruapuriwozuo-tutahua"
+/>
 
 ### 仕組み
 
