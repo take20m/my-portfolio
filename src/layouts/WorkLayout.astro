@@ -190,7 +190,8 @@ const ogImage = await getImage({
   }
 
   /* 拡大表示は JS で有効化されるため、付与された属性を目印にする */
-  .prose :global(img[data-zoomable]) {
+  .prose :global(img[data-zoomable]),
+  .cover :global(img[data-zoomable]) {
     cursor: zoom-in;
   }
 </style>
