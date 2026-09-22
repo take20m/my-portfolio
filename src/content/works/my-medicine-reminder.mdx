@@ -28,16 +28,16 @@ Google アカウントでログインし、薬の種類や飲む時間を自分�
 - 月ごとのカレンダーで、服用・スキップ・未記録を確認
 - iOS / Android のホーム画面へ追加し、オフラインでも履歴を閲覧
 
-### 技術構成
+### 技術スタック
 
-- フロントエンド: **Preact + Vite + TypeScript**、ホスティングは **Cloudflare Pages**
-- PWA / 通知表示: **Service Worker + Workbox**
-- API: **Cloudflare Workers + Hono**
-- データストア: **Cloudflare KV**
-- 認証: **Firebase Authentication**（Google）
-- プッシュ通知: **Web Push (VAPID)** を自前実装
-- スケジューラー: **Cloudflare Cron Triggers**（5 分間隔）
-- 日付の境界は **JST (Asia/Tokyo)** で固定
+- フロントエンド: Preact + Vite + TypeScript、ホスティングは Cloudflare Pages
+- PWA / 通知表示: Service Worker + Workbox
+- API: Cloudflare Workers + Hono
+- データストア: Cloudflare KV
+- 認証: Firebase Authentication（Google）
+- プッシュ通知: Web Push (VAPID) を自前実装
+- スケジューラー: Cloudflare Cron Triggers（5 分間隔）
+- 日付の境界は JST (Asia/Tokyo) で固定
 
 通知は Web Push（VAPID）で実装し、Cloudflare Cron Triggers から 5 分おきに送信対象を確認しています。日付が変わるタイミングで記録がずれないよう、日付の境界は JST に固定しました。
 

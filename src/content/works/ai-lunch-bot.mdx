@@ -20,12 +20,12 @@ import { Image } from "astro:assets";
 
 ### 仕組み
 
-- **Python** 製のローカル MCP（Model Context Protocol）サーバー
-- メニュー PDF を **Gemini** に直接渡し、OCR した内容を JSON に変換
-- すみよしの注文システムへ **HTTP リクエスト** を送り、注文や取り消しを実行
-- **stdio / SSE** の両トランスポートに対応
-- launchd で毎朝の注文状況を **Slack** へ通知
-- ログイン情報は **keyring** を使い、OS のセキュアストレージに保存
+- Python 製のローカル MCP（Model Context Protocol）サーバー
+- メニュー PDF を Gemini に直接渡し、OCR した内容を JSON に変換
+- すみよしの注文システムへ HTTP リクエスト を送り、注文や取り消しを実行
+- stdio / SSE の両トランスポートに対応
+- launchd で毎朝の注文状況を Slack へ通知
+- ログイン情報は keyring を使い、OS のセキュアストレージに保存
 
 MCP のツールとして、メニュー検索・注文・取り消し・状況確認を実装しました。メニューの取り込みでは、PDF を画像へ変換せず Gemini に直接渡し、必要な項目を構造化 JSON で返すようにプロンプトを調整しています。
 
