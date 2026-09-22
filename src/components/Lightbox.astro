@@ -1,0 +1,150 @@
+---
+// 記事本文（.prose）内の画像をクリック/タップで拡大表示する。
+// 画像 1 枚ずつにハンドラを付けず、document へのイベント委譲で処理する。
+---
+
+<dialog class="lightbox" data-lightbox aria-label="拡大画像">
+  <img data-lightbox-image src="" alt="" />
+</dialog>
+
+<style>
+  .lightbox {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    margin: 0;
+    padding: var(--gutter);
+    border: 0;
+    background: transparent;
+  }
+
+  .lightbox[open] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lightbox::backdrop {
+    background: rgb(0 0 0 / 0.88);
+  }
+
+  .lightbox img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    cursor: zoom-out;
+  }
+</style>
+
+<script>
+  const SELECTOR = ".prose img";
+
+  /**
+   * 拡大用の URL を決める。Zoomable が付ける data-zoom-src を優先し、
+   * 無ければ srcset の最大幅、それも無ければ表示中の src を使う。
+   */
+  function zoomSource(img: HTMLImageElement): string {
+    const explicit = img.dataset.zoomSrc;
+    if (explicit) return explicit;
+
+    const srcset = img.getAttribute("srcset");
+    const fallback = img.currentSrc || img.src;
+    if (!srcset) return fallback;
+
+    let bestUrl = fallback;
+    let bestWidth = 0;
+    for (const candidate of srcset.split(",")) {
+      const [url, descriptor] = candidate.trim().split(/\s+/);
+      if (!url) continue;
+      const width =
+        descriptor && descriptor.endsWith("w") ? parseInt(descriptor, 10) : 0;
+      if (width > bestWidth) {
+        bestUrl = url;
+        bestWidth = width;
+      }
+    }
+    return bestUrl;
+  }
+
+  let lastTrigger: HTMLElement | null = null;
+
+  function open(trigger: HTMLImageElement) {
+    const dialog = document.querySelector<HTMLDialogElement>("[data-lightbox]");
+    if (!dialog || typeof dialog.showModal !== "function") return;
+    // 開いている dialog に showModal() を呼ぶと例外になる
+    if (dialog.open) return;
+
+    const view = dialog.querySelector<HTMLImageElement>("[data-lightbox-image]");
+    if (!view) return;
+
+    view.src = zoomSource(trigger);
+    view.alt = trigger.alt ?? "";
+    lastTrigger = trigger;
+
+    // iOS で背面がスクロールするのを防ぐ
+    document.body.style.overflow = "hidden";
+    dialog.showModal();
+  }
+
+  /** ページごとに張り替わる dialog と画像に対する初期化 */
+  function setup() {
+    for (const img of document.querySelectorAll<HTMLImageElement>(SELECTOR)) {
+      if (img.dataset.zoomable) continue;
+      img.dataset.zoomable = "true";
+      img.setAttribute("tabindex", "0");
+      img.setAttribute("role", "button");
+      const alt = img.getAttribute("alt");
+      img.setAttribute("aria-label", alt ? `${alt}（拡大表示）` : "画像を拡大表示");
+    }
+
+    const dialog = document.querySelector<HTMLDialogElement>("[data-lightbox]");
+    if (!dialog || dialog.dataset.ready) return;
+    dialog.dataset.ready = "true";
+
+    // 背景（dialog 自身）と拡大画像のどちらをクリックしても閉じる
+    dialog.addEventListener("click", (event) => {
+      const target = event.target as HTMLElement;
+      if (target === dialog || target.hasAttribute("data-lightbox-image")) {
+        dialog.close();
+      }
+    });
+
+    // Esc とボタン操作の双方がここを通る
+    dialog.addEventListener("close", () => {
+      document.body.style.overflow = "";
+      const view = dialog.querySelector<HTMLImageElement>("[data-lightbox-image]");
+      if (view) view.removeAttribute("src");
+      lastTrigger?.focus();
+      lastTrigger = null;
+    });
+  }
+
+  // document 側の委譲は一度だけ張れば、遷移後の DOM にもそのまま効く。
+  // html 要素の属性は遷移時に差し替わるので、印は window に置く。
+  const scope = window as typeof window & { lightboxBound?: boolean };
+  if (!scope.lightboxBound) {
+    scope.lightboxBound = true;
+
+    document.addEventListener("click", (event) => {
+      const target = event.target as HTMLElement | null;
+      const img = target?.closest?.(SELECTOR);
+      if (img instanceof HTMLImageElement) open(img);
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" && event.key !== " ") return;
+      const active = document.activeElement;
+      if (!(active instanceof HTMLImageElement) || !active.dataset.zoomable) {
+        return;
+      }
+      event.preventDefault();
+      open(active);
+    });
+
+    // ClientRouter が有効なので、遷移のたびに初期化し直す
+    document.addEventListener("astro:page-load", setup);
+  }
+</script>

@@ -2,6 +2,7 @@
 import { Image, getImage } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import BaseLayout from "./BaseLayout.astro";
+import Lightbox from "../components/Lightbox.astro";
 import TagList from "../components/TagList.astro";
 import { formatPeriod } from "../utils/formatDate";
 
@@ -73,6 +74,8 @@ const ogImage = await getImage({
       <a href="/works/">← Works 一覧へ戻る</a>
     </p>
   </article>
+
+  <Lightbox />
 </BaseLayout>
 
 <style>
@@ -184,5 +187,10 @@ const ogImage = await getImage({
     padding-left: var(--space-2);
     color: var(--c-fg-muted);
     margin: var(--space-3) 0;
+  }
+
+  /* 拡大表示は JS で有効化されるため、付与された属性を目印にする */
+  .prose :global(img[data-zoomable]) {
+    cursor: zoom-in;
   }
 </style>

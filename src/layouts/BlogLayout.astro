@@ -2,6 +2,7 @@
 import { getImage } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import BaseLayout from "./BaseLayout.astro";
+import Lightbox from "../components/Lightbox.astro";
 import { formatFullDate, isoDate } from "../utils/formatDate";
 
 interface Props {
@@ -59,6 +60,8 @@ const ogImage = data.thumbnail
       <a href="/blog/">← Blog 一覧へ戻る</a>
     </p>
   </article>
+
+  <Lightbox />
 </BaseLayout>
 
 <style>
@@ -160,5 +163,10 @@ const ogImage = data.thumbnail
     padding-left: var(--space-2);
     color: var(--c-fg-muted);
     margin: var(--space-3) 0;
+  }
+
+  /* 拡大表示は JS で有効化されるため、付与された属性を目印にする */
+  .prose :global(img[data-zoomable]) {
+    cursor: zoom-in;
   }
 </style>

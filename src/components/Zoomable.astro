@@ -1,0 +1,30 @@
+---
+// 記事本文用の画像。通常表示は従来どおりの srcset のまま、
+// 拡大表示のときだけ読み込む高解像度版の URL を data 属性で持たせる。
+import { Image, getImage } from "astro:assets";
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  widths?: number[];
+  sizes?: string;
+  zoomWidth?: number;
+}
+
+const {
+  src,
+  alt,
+  widths = [480, 720, 960],
+  sizes = "(min-width: 720px) 720px, 100vw",
+  zoomWidth = 1440,
+} = Astro.props;
+
+// 元画像より大きくはしない
+const zoom = await getImage({
+  src,
+  width: Math.min(zoomWidth, src.width),
+  format: "webp",
+});
+---
+
+<Image src={src} alt={alt} widths={widths} sizes={sizes} data-zoom-src={zoom.src} />
