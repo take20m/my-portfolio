@@ -10,7 +10,7 @@
 <p>
   <img alt="Astro" src="https://img.shields.io/badge/Astro-v6-BC52EE?logo=astro&logoColor=white" />
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white" />
-  <img alt="Cloudflare Pages" src="https://img.shields.io/badge/Cloudflare%20Pages-F38020?logo=cloudflarepages&logoColor=white" />
+  <img alt="Cloudflare Workers" src="https://img.shields.io/badge/Cloudflare%20Workers-F38020?logo=cloudflareworkers&logoColor=white" />
 </p>
 
 <img src="public/og-default.png" alt="take20m のポートフォリオ" width="800" />
