@@ -1,5 +1,6 @@
 ---
 import type { SiteSocial } from "../data/site";
+import { encodeEmail } from "../utils/email";
 
 interface Props {
   social: SiteSocial;
@@ -11,7 +12,9 @@ const { social, class: className } = Astro.props;
 type Item = {
   key: keyof SiteSocial;
   label: string;
-  href: string;
+  href?: string;
+  // メールは素の mailto を出さず、クライアント側で組み立てる
+  email?: string;
 };
 
 const definitions: { key: keyof SiteSocial; label: string }[] = [
@@ -21,11 +24,11 @@ const definitions: { key: keyof SiteSocial; label: string }[] = [
   { key: "email", label: "Email" },
 ];
 
-const items: Item[] = definitions.flatMap(({ key, label }) => {
+const items: Item[] = definitions.flatMap(({ key, label }): Item[] => {
   const value = social[key];
   if (!value) return [];
-  const href = key === "email" ? `mailto:${value}` : value;
-  return [{ key, label, href }];
+  if (key === "email") return [{ key, label, email: encodeEmail(value) }];
+  return [{ key, label, href: value }];
 });
 ---
 
@@ -36,6 +39,7 @@ const items: Item[] = definitions.flatMap(({ key, label }) => {
         <li>
           <a
             href={item.href}
+            data-email={item.email}
             aria-label={item.label}
             target={item.key === "email" ? undefined : "_blank"}
             rel={item.key === "email" ? undefined : "me noopener"}

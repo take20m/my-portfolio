@@ -1,0 +1,31 @@
+---
+// data-email を持つ要素のリンクとテキストを、クライアント側で復元する。
+// エンコードの仕様は src/utils/email.ts と対になっている。
+---
+
+<script>
+  function decode(encoded: string): string {
+    const key = parseInt(encoded.slice(0, 2), 16);
+    let out = "";
+    for (let i = 2; i < encoded.length; i += 2) {
+      out += String.fromCharCode(parseInt(encoded.slice(i, i + 2), 16) ^ key);
+    }
+    return out;
+  }
+
+  function reveal() {
+    const targets = document.querySelectorAll<HTMLElement>("[data-email]");
+    for (const el of targets) {
+      const encoded = el.dataset.email;
+      if (!encoded || el.dataset.emailReady) continue;
+
+      const address = decode(encoded);
+      el.setAttribute("href", `mailto:${address}`);
+      // data-email-text が付いている要素だけ、表示も素のアドレスに戻す
+      if (el.dataset.emailText !== undefined) el.textContent = address;
+      el.dataset.emailReady = "true";
+    }
+  }
+
+  document.addEventListener("astro:page-load", reveal);
+</script>
