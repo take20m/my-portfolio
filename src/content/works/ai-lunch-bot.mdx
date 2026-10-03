@@ -1,11 +1,11 @@
 ---
 title: ai-lunch-bot
-summary: AI アシスタントとの会話から、社内向けのお弁当を注文・確認できるローカル MCP サーバー
+summary: AIアシスタントとの会話から、社内向けのお弁当を注文・確認できるローカルMCPサーバー
 startDate: 2026-02-08
 roles: ["Backend", "Tooling"]
 stack: ["Python", "MCP", "Gemini API"]
 thumbnail: ../../assets/works/ai-lunch-bot-cover.png
-thumbnailAlt: ai-lunch-bot のカバー画像
+thumbnailAlt: ai-lunch-botのカバー画像
 repoUrl: https://github.com/take20m/ai-lunch-bot
 order: 4
 ---
@@ -14,22 +14,22 @@ import { Image } from "astro:assets";
 
 ### 作ったきっかけ
 
-社内で利用しているお弁当注文サービス「すみよし」は、注文のたびに PDF のメニュー表を開き、専用サイトへログインする必要があります。毎日の小さな手間を減らすため、Claude Code や GitHub Copilot との会話から注文できるようにしました。
+社内で利用しているお弁当注文サービス「すみよし」は、注文のたびにPDFのメニュー表を開き、専用サイトへログインする必要があります。毎日の小さな手間を減らすため、Claude CodeやGitHub Copilotとの会話から注文できるようにしました。
 
-たとえば「今日の日替わりは？」「A 弁当を注文して」と伝えると、メニューの確認から注文までを AI アシスタントが進めます。
+たとえば「今日の日替わりは？」「A弁当を注文して」と伝えると、メニューの確認から注文までをAIアシスタントが進めます。
 
 ### 仕組み
 
-- Python 製のローカル MCP（Model Context Protocol）サーバー
-- メニュー PDF を Gemini に直接渡し、OCR した内容を JSON に変換
-- すみよしの注文システムへ HTTP リクエスト を送り、注文や取り消しを実行
-- stdio / SSE の両トランスポートに対応
-- launchd で毎朝の注文状況を Slack へ通知
-- ログイン情報は keyring を使い、OS のセキュアストレージに保存
+- Python製のローカルMCP（Model Context Protocol）サーバー
+- メニューPDFをGeminiに直接渡し、OCRした内容をJSONに変換
+- すみよしの注文システムへHTTPリクエストを送り、注文や取り消しを実行
+- stdio / SSEの両トランスポートに対応
+- launchdで毎朝の注文状況をSlackへ通知
+- ログイン情報はkeyringを使い、OSのセキュアストレージに保存
 
-MCP のツールとして、メニュー検索・注文・取り消し・状況確認を実装しました。メニューの取り込みでは、PDF を画像へ変換せず Gemini に直接渡し、必要な項目を構造化 JSON で返すようにプロンプトを調整しています。
+MCPのツールとして、メニュー検索・注文・取り消し・状況確認を実装しました。メニューの取り込みでは、PDFを画像へ変換せずGeminiに直接渡し、必要な項目を構造化JSONで返すようにプロンプトを調整しています。
 
-注文部分は、既存システムの通信を調べて HTTP クライアントを実装しました。普段使っている AI アシスタントをそのまま操作画面にできるため、注文のためだけに別の画面を行き来せずに済みます。
+注文部分は、既存システムの通信を調べてHTTPクライアントを実装しました。普段使っているAIアシスタントをそのまま操作画面にできるため、注文のためだけに別の画面を行き来せずに済みます。
 
 ### 今後
 

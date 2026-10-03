@@ -1,11 +1,11 @@
 ---
 title: ReadingAsset
-summary: 読んだ本と感想を記録し、読書を習慣にするための Web アプリ
+summary: 読んだ本と感想を記録し、読書を習慣にするためのWebアプリ
 startDate: 2021-04-28
 roles: ["Backend", "Infra"]
 stack: ["Rails", "MySQL", "Docker", "AWS"]
 thumbnail: ../../assets/works/reading-asset-cover.png
-thumbnailAlt: ReadingAsset のカバー画像
+thumbnailAlt: ReadingAssetのカバー画像
 repoUrl: https://github.com/take20m/ReadingAsset
 order: 6
 ---
@@ -14,24 +14,24 @@ import { Image } from "astro:assets";
 
 ### 作ったきっかけ
 
-本を読んでも内容を忘れがちだったため、感想を残す場所を作れば読書を続けやすくなるのでは、と考えて作った Web アプリです。自分で使うことを前提に、読んだ本の検索から感想の記録までをまとめました。
+本を読んでも内容を忘れがちだったため、感想を残す場所を作れば読書を続けやすくなるのでは、と考えて作ったWebアプリです。自分で使うことを前提に、読んだ本の検索から感想の記録までをまとめました。
 
-個人開発で **Rails + Docker + AWS** を一通り扱ってみることも目的のひとつでした。現在は維持費を考慮し、AWS のインスタンスを停止しています。
+個人開発でRailsとDocker、AWSを一通り扱ってみることも目的のひとつでした。現在は維持費を考慮し、AWSのインスタンスを停止しています。
 
 ### できること
 
 - ユーザー登録、ログイン、プロフィール編集
-- Google Books API を使った本の検索
+- Google Books APIを使った本の検索
 - 感想の投稿、編集、削除
 
 ### 技術スタック
 
-- Ruby on Rails + Slim / SCSS で実装
-- DB は MySQL、本の検索は Google Books API
-- Docker Compose でローカル環境を構築（app / mysql / nginx）
+- Ruby on Rails + Slim / SCSSで実装
+- DBはMySQL、本の検索はGoogle Books API
+- Docker Composeでローカル環境を構築（app / mysql / nginx）
 - AWS（EC2 / RDS / ALB / Route53 / ACM / S3）にデプロイ
-- Travis CI で push / PR 時に RSpec を自動実行
+- Travis CIでpush / PR時にRSpecを自動実行
 
 ### 振り返り
 
-個人で作ったサービスを **Rails と AWS** で運用した、最初の経験になりました。一方で、利用頻度に対してインフラの維持費が見合わず、個人サービスでは作ることだけでなく、継続にかかる費用も設計の一部だと実感しました。
+個人で作ったサービスをRailsとAWSで運用した、最初の経験になりました。一方で、利用頻度に対してインフラの維持費が見合わず、個人サービスでは作ることだけでなく、継続にかかる費用も設計の一部だと実感しました。

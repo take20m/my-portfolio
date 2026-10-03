@@ -1,11 +1,11 @@
 ---
 title: おくすりリマインダー
-summary: 薬を飲む時間を通知し、服用履歴も残せる PWA
+summary: 薬を飲む時間を通知し、服用履歴も残せるPWA
 startDate: 2026-04-07
 roles: ["Frontend", "Backend"]
 stack: ["Preact", "TypeScript", "Cloudflare Workers", "Hono", "Firebase Auth"]
 thumbnail: ../../assets/works/my-medicine-reminder-cover.png
-thumbnailAlt: my-medicine-reminder のカバー画像
+thumbnailAlt: my-medicine-reminderのカバー画像
 repoUrl: https://github.com/take20m/my-medicine-reminder
 liveUrl: https://my-medicine-reminder.pages.dev/
 order: 2
@@ -15,31 +15,31 @@ import { Image } from "astro:assets";
 
 ### 作ったきっかけ
 
-「今日、薬を飲んだっけ」と思い返すことがよくあり、月末に数えると薬が余っていることもありました。そこで、飲む時間の通知と服用記録をひとつにまとめた PWA を作りました。
+「今日、薬を飲んだっけ」と思い返すことがよくあり、月末に数えると薬が余っていることもありました。そこで、飲む時間の通知と服用記録をひとつにまとめたPWAを作りました。
 
-Google アカウントでログインし、薬の種類や飲む時間を自分に合わせて登録できます。ブラウザから使えるので、専用アプリのインストールは必要ありません。
+Googleアカウントでログインし、薬の種類や飲む時間を自分に合わせて登録できます。ブラウザから使えるので、専用アプリのインストールは必要ありません。
 
 ### できること
 
 - 複数の薬を登録し、不要な期間は一時停止
-- 朝・昼・夕・就寝前の 4 タイミングを、任意の時刻に設定
-- 設定時刻に Web Push で通知し、未記録の場合は一定間隔で再通知
+- 朝・昼・夕・就寝前の4タイミングを、任意の時刻に設定
+- 設定時刻にWeb Pushで通知し、未記録の場合は一定間隔で再通知
 - 「飲んだ」と記録すると、その回の通知を自動で終了
 - 月ごとのカレンダーで、服用・スキップ・未記録を確認
-- iOS / Android のホーム画面へ追加し、オフラインでも履歴を閲覧
+- iOS / Androidのホーム画面へ追加し、オフラインでも履歴を閲覧
 
 ### 技術スタック
 
-- フロントエンド: Preact + Vite + TypeScript、ホスティングは Cloudflare Pages
+- フロントエンド: Preact + Vite + TypeScript、ホスティングはCloudflare Pages
 - PWA / 通知表示: Service Worker + Workbox
 - API: Cloudflare Workers + Hono
 - データストア: Cloudflare KV
 - 認証: Firebase Authentication（Google）
-- プッシュ通知: Web Push (VAPID) を自前実装
-- スケジューラー: Cloudflare Cron Triggers（5 分間隔）
-- 日付の境界は JST (Asia/Tokyo) で固定
+- プッシュ通知: Web Push (VAPID)を自前実装
+- スケジューラー: Cloudflare Cron Triggers（5分間隔）
+- 日付の境界はJST (Asia/Tokyo)で固定
 
-通知は Web Push（VAPID）で実装し、Cloudflare Cron Triggers から 5 分おきに送信対象を確認しています。日付が変わるタイミングで記録がずれないよう、日付の境界は JST に固定しました。
+通知はWeb Push（VAPID）で実装し、Cloudflare Cron Triggersから5分おきに送信対象を確認しています。日付が変わるタイミングで記録がずれないよう、日付の境界はJSTに固定しました。
 
 ### 今後
 
