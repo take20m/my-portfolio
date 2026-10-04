@@ -1,9 +1,9 @@
 ---
 title: サンドーム福井 ライブ情報
-summary: サンドーム福井の公演予定とチケットの受付期間を、毎晩自動で収集して掲載するサイト
+summary: サンドーム福井の公演予定とチケットの受付期間を毎晩自動で集めて掲載し、新着をメールやプッシュ通知で届けるサイト
 startDate: 2026-07-29
 roles: ["Frontend", "Backend", "Infra"]
-stack: ["TypeScript", "Cloudflare Workers", "Hono", "D1", "Claude Code", "GitHub Actions"]
+stack: ["TypeScript", "Cloudflare Workers", "Hono", "D1", "Claude Code", "GitHub Actions", "Web Push", "Resend"]
 thumbnail: ../../assets/works/sundome-live-schedule-cover.png
 thumbnailAlt: サンドーム福井 ライブ情報の公演一覧・公演詳細ページと、Slackに届くRSS通知
 repoUrl: https://github.com/take20m/sundome-live-schedule
@@ -24,13 +24,21 @@ import rssSlack from "../../assets/works/sundome-live-schedule/rss-slack.png";
 
 そこで、公演予定とチケットの受付期間をまとめて確認できるサイトを作りました。
 
+### できること
+
+公演の一覧と、公演ごとのチケット受付期間を見られます。受付中のものには締め切りまでの残り時間が出るので、まだ申し込めるかどうかがひと目で分かります。
+
+新着の受け取り方は4通りです。メールで購読すると、前回の配信より後に見つかった公演と受付開始が、毎日12:00にまとめて1通で届きます。ブラウザのプッシュ通知でも同じ内容を受け取れます。ほかに、RSSリーダーで読む、Slackの `/feed subscribe` で購読する、ホーム画面に追加してアプリのように開く、という使い方もできます。
+
+メールは確認用のリンクを開いて初めて登録が完了する形にし、配信停止のリンクも毎回添えています。前回どこまで送ったかを記録しているため、同じ更新が二度届くことはありません。新着がない日は送らず、その日に見送った更新を翌日また読み直さないよう、記録上の位置だけ進めます。
+
 ### 仕組み
 
 情報収集にはClaude Codeのヘッドレスモード（`claude -p`）を使い、GitHub Actionsのcronから毎晩実行しています。調査手順はプログラムではなく、WebSearchとWebFetchの使い方を日本語で書いたMarkdownファイルです。
 
 収集結果はJSONで受け取り、Node.jsのスクリプトで検証してから取り込みAPIへ送ります。サイトはCloudflare Workers + HonoでSSRし、データはD1（SQLite）に保存しています。
 
-公演ごとの詳細ページには、チケットの締め切りまでの残り時間を表示しています。schema.orgのMusicEventに沿った構造化データも出力しています。更新情報はRSSで配信しており、Slackの `/feed subscribe` から購読できます。
+公演ごとの詳細ページでは、schema.orgのMusicEventに沿った構造化データも出力しています。新着の配信は、RSSとメール、プッシュ通知の3経路を同じ変更履歴から組み立てています。メールの送信にはResendを使い、Cloudflare Cron Triggersから毎日呼び出しています。
 
 新しい公演やチケット受付を見つけると、こんな形でSlackに流れてきます。
 
